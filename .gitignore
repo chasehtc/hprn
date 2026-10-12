@@ -1,0 +1,14 @@
+credentials.json
+clean/credentials.json
+config.py
+*.json
+*.csv
+clean/
+raw/
+nces/
+__pycache__/
+.venv/
+.idea/
+.vscode/
+ppactice.py
+test.py
