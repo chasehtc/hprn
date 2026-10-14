@@ -9,7 +9,8 @@
 }
 */
 
-WITH look as (
+CREATE OR REPLACE TABLE hprn_warehouse.mart_udi AS
+WITH base_metrics AS(
 SELECT 
   v.place_id, 
   v.name, 
@@ -39,5 +40,5 @@ SELECT
   name,
   zip_code,
   target_pop_density
-FROM look
+FROM base_metrics
 ORDER BY normalized_udi DESC, place_id, t_day, t_hour;

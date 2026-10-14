@@ -10,5 +10,5 @@ __pycache__/
 .venv/
 .idea/
 .vscode/
-ppactice.py
+practice.py
 test.py
