@@ -1,4 +1,4 @@
-# Hoop Run Data Pipeline 🏀
+# HoopRun Data Pipeline 🏀
 
 An automated, cost-optimized market intelligence and ELT data pipeline designed to quantify unmet recreational basketball court demand across metropolitan areas.
 
