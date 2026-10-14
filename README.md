@@ -1,5 +1,13 @@
-# Hooprun Data Engine
-## Indoor Court Demand Forecasting Ingestion
+# Hoop Run Data Pipeline 🏀
+
+An automated, cost-optimized market intelligence and ELT data pipeline designed to quantify unmet recreational basketball court demand across metropolitan areas.
+
+### Key Capabilities - Indoor Court Demand Forecasting/Ingestion
+- **Multi-Source Supply Discovery**: Aggregates athletic venues across commercial directories, municipal open data portals, public/private school databases, and geospatial mapping platforms.
+- **Cost-Controlled API Architecture**: Utilizes free open-source discovery endpoints and tight field masking on Google Places API endpoints to remain strictly within free-tier limits.
+- **Global Geodetic Deduplication**: Merges overlapping entities using token-based text similarity combined with Haversine distance spatial proximity checks.
+- **Analytical Data Warehouse**: Stages raw JSON/CSV data in Google Cloud Storage (GCS) and builds analytical models in Google BigQuery.
+
 
 ## Table of Contents
 - [Executive Summary/Project Intent](#executive-summaryproject-intent)
@@ -8,21 +16,20 @@
 - [Analytical Model: Unmet Demand Index (UDI)](#analytical-model-unmet-demand-index-udi)
 - [Scope & Roadmap: Completed vs. Deferred Enhancements](#scope--roadmap-completed-vs-deferred-enhancements)
 - [Orchestration & Automation](#orchestration--automation)
-- [Key Data Engineering Highlights for Employers](#key-data-engineering-highlights-for-employers)
+- [Key Data Engineering Highlights for Employers](#key-data-engineering-highlights)
 
 ---
-
 ## Executive Summary/Project Intent
-- **Problem Statement:** Recreational sports platforms face a cold-start problem—facilities hesitate to list without guaranteed player volume, while players won't join without verified, accessible court options.
-- **Solution:** An automated ELT pipeline that ingests foot-traffic distributions, municipal demographics, and unstructured social media intent to identify "dead-zone runs" (hours with gym utilization under 20% combined with high surrounding player demand).
-- **Business Impact:** Demonstrates production-grade data engineering, dimensional warehouse modeling, NLP entity extraction, and business intelligence, delivering actionable data to drive facility partner acquisition for hooprun.
+- **Problem Statement:** Recreational sports platforms face a cold-start problem—while recreational sports facilities often suffer from spatial dead zones, unequal court distribution, and unquantified local demand.
+- **Solution:** An automated ELT pipeline that ingests foot-traffic distributions, municipal demographics, and unstructured social media intent to identify "dead-zones" (hours with gym utilization under 20% combined with high surrounding player demand).
+- **Business Impact:** Demonstrates production-grade data engineering, dimensional warehouse modeling, Natural Language Processing entity extraction, and business intelligence, delivering actionable data to drive facility acquisitions for hooprun.
 
 ---
 
 ## End-to-End System Architecture
 - **Multi-Source Ingestion Layer:** Combines Google Places API (Basic Text SKU), US Census ACS API, Municipal ArcGIS Hub & OpenStreetMap (OSM) Overpass APIs, NCES School Directory API, and Apify (Instagram/Facebook/Google Maps foot-traffic scrapers).
-- **Staging & Storage:** Raw JSON and CSV payloads landed in Google Cloud Storage (GCS) and DuckDB as an immutable audit trail.
-- **Cloud Data Warehouse:** Google BigQuery hosting raw staging tables, transformed star-schema dimensional models, and analytical views.
+- **Staging & Storage:** Raw JSON and CSV payloads landed in Google Cloud Storage (GCS) as an immutable audit trail.
+- **Cloud Data Warehouse:** Google BigQuery hosting raw staging tables, SQL-transformed star-schema dimensional models, and analytical views.
 - **NLP Entity Extraction Engine:** Python (spaCy, NLTK, RegEx) extracting basketball intent, dates, time windows, and venue names from unstructured social chatter.
 - **Presentation & BI:** Streamlit geospatial maps, hourly heatmaps, and automated facility pitch report generator for the hooprun team.
 
@@ -65,7 +72,7 @@
   - BigQuery star-schema warehouse setup with SQL-based UDI transformation views via [`run_pipeline.py`](./run_pipeline.py).
   - End-to-end Python orchestration script running extraction, staging, and transformation passes.
 - **Deferred Scope & Future Enhancements:**
-  - **Monetization & Prepaid Pledge Tiering:** Excluded from initial scope to prioritize physical supply-demand gap alignment and pipeline engineering.
+  - **Monetization:** Excluded from initial scope to prioritize physical supply-demand gap alignment and pipeline engineering.
   - **dbt Data Build Tool Integration:** Transformations currently execute via raw SQL scripts in BigQuery. Migration to dbt Core for automated testing, schema validation, and lineage documentation is planned as a Phase 2 enhancement.
   - **Commercial Tableau Layer:** Replaced with PowerBI dashboards during the pilot phase to reduce recurring commercial costs.
 
@@ -79,7 +86,7 @@
 ![Orchestration & Automation Pipeline](<./resources/HPRN Pipeline Flowchart.png>)
 ---
 
-## Key Data Engineering Highlights for Employers
+## Key Data Engineering Highlights
 - **Budget-Conscious Cloud Design:** Implemented strict field masking, API caching, and free/pay-as-you-go cloud tiers (GCS, BigQuery, Places API $200 credit) to maintain near-$0 operational overhead.
 - **Resilient Data Quality & Deduplication:** Developed a multi-layer verification pipeline featuring negative keyword blocklists and token-similarity deduplication to merge disparate municipal, school, and commercial sources.
 - **Full-Lifecycle Analytics Ownership:** Managed the complete lifecycle from raw API web scraping and NLP signal extraction to data modeling, warehouse optimization, and executive presentation.
